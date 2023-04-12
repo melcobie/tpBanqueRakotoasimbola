@@ -60,4 +60,17 @@ public class GestionnaireCompte {
             this.creerCompte(compte);
         }
     }
+    
+    public void transferer(CompteBancaire source,
+            CompteBancaire destinataire,
+            int montant){
+        source.retirer(montant);
+        destinataire.deposer(montant);
+        em.merge(source);
+        em.merge(destinataire);
+    }
+    
+    public CompteBancaire getCompteById(int id){
+        return em.find(CompteBancaire.class, Long.valueOf(id));
+    }
 }
