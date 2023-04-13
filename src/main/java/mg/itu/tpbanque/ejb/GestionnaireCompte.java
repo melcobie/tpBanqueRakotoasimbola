@@ -98,4 +98,8 @@ public class GestionnaireCompte {
     public void deleteCompte(CompteBancaire c){
         em.remove(em.merge(c));
     }
+    
+    public CompteBancaire update(CompteBancaire c){
+        return em.merge(c);
+    }
 }

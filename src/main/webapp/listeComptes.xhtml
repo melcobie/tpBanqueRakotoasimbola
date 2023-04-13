@@ -33,7 +33,11 @@
                                 <f:convertNumber  pattern="###,###,##0"/>
                             </h:outputText>
                         </p:column>
-                        <p:column width='30'>
+                        <p:column width='50'>
+                            <h:link outcome="edit?id=#{item.id}">
+                                <h:graphicImage name='images/edit.png'
+                                               height='20'/>
+                            </h:link>
                             <h:commandLink action="#{listeComptes.supprimer(item)}">
                                <h:graphicImage name='images/delete.png'
                                                height='20'/>

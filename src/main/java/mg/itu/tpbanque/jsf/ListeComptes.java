@@ -39,6 +39,6 @@ public class ListeComptes implements Serializable {
     
     public String supprimer(CompteBancaire c){
         gestionnaire.deleteCompte(c);
-        return "listeComptes";
+        return "listeComptes?faces-redirect=true";
     }
 }

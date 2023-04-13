@@ -73,12 +73,22 @@ public class Mouvement implements Serializable {
         }
         else if(typeMouvement.equals("retrait")){
             if(montant > compte.getSolde()){
-                Util.addFlashErrorMessage("Votre solde est insuffisant !");
+                Util.messageErreur("Votre solde est insuffisant !", "Solde insuffisant", "form:montant");
                 return null;
             }
             gestionnaire.retirer(compte, montant);
         }
         Util.addFlashInfoMessage(typeMouvement + " enregistré sur le compte de " + compte.getNom());
+        return "listeComptes?faces-redirect=true";
+    }
+    
+    public String editCompte(){
+        if (this.gestionnaire.checkExistingName(compte)) {
+            Util.messageErreur("Ce nom est déjà utilisé !", "Ce nom est déjà utilisé !", "form:nom");
+            return null;
+        }
+        gestionnaire.update(compte);
+        Util.addFlashInfoMessage("Le compte numero " + compte.getId() + " a été modifié");
         return "listeComptes?faces-redirect=true";
     }
     
