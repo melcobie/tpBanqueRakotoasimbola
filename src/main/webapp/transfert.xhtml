@@ -30,7 +30,8 @@
                         Montant : 
                         <h:inputText id="montant" size="3" value="#{transfert.montant}"
                                      required="true"
-                                     converterMessage="L'id est un nombre entier"/>
+                                     converterMessage="Le montant est un nombre entier"
+                                     validatorMessage="Le montant doit etre positif ou zero"/>
                         <h:message for="montant"/>
                     </h:panelGrid>
                     <h:commandButton value='Transférer' action='#{transfert.transferer}'/>

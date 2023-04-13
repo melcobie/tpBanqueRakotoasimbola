@@ -5,9 +5,11 @@
 package mg.itu.tpbanque.ejb;
 
 import jakarta.annotation.sql.DataSourceDefinition;
+import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,15 @@ public class GestionnaireCompte {
 
     @PersistenceContext(unitName = "banquePU")
     private EntityManager em;
+    
+    public boolean checkExistingName(CompteBancaire c){
+        String q = "Select count(cb) from CompteBancaire cb "
+                + "where cb.nom = :nom";
+        Query query = em.createQuery(q);
+        query.setParameter("nom", c.getNom());
+        long count = (Long)query.getSingleResult();
+        return count>0;
+    }
 
     public void creerCompte(CompteBancaire c) {
         em.persist(c);

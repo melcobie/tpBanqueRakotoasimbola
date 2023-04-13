@@ -3,6 +3,7 @@ package mg.itu.tpbanque.jsf;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
+import jakarta.validation.constraints.PositiveOrZero;
 import mg.itu.tpbanque.ejb.GestionnaireCompte;
 import mg.itu.tpbanque.entities.CompteBancaire;
 import mg.itu.tpbanque.jsf.util.Util;
@@ -21,6 +22,7 @@ public class Transfert {
 
     private int idSource;
     private int idDestinataire;
+    @PositiveOrZero
     private int montant;
 
     @EJB
@@ -68,12 +70,13 @@ public class Transfert {
                 erreur = true;
             }
         }
-        if(erreur == true){
-            return null;
-        }
         CompteBancaire destinataire = this.gestionnaire.getCompteById(idDestinataire);
         if (destinataire == null) {
             Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:destinataire");
+            erreur = true;
+        }
+        if(montant < 0){
+            Util.messageErreur("Le montant ne doit pas etre négatif !", "Montant négatif", "form:montant");
             erreur = true;
         }
         if(erreur == true){

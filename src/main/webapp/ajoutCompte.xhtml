@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/template_default.xhtml">
+            <ui:param name="titre" value="Ajout de compte"/>
+
+            <ui:define name="content">
+                <h:form id="form">
+                    <h:panelGrid columns="3">
+                        Nom : 
+                        <h:inputText id="nom" size="5" value="#{ajout.nom}"
+                                     required="true"
+                                     converterMessage="Le nom ne doit pas etre vide"/>
+                        <h:message for="nom"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="3">
+                        Solde : 
+                        <h:inputText id="montant" size="3" value="#{ajout.montant}"
+                                     required="true"
+                                     converterMessage="Le montant est un nombre entier"
+                                     validatorMessage="Le solde doit etre positif ou zero"/>
+                        <h:message for="montant"/>
+                    </h:panelGrid>
+                    <h:commandButton value='Créer' action='#{ajout.creer}'/>
+                </h:form>
+                <h:messages/>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
