@@ -20,8 +20,8 @@ import mg.itu.tpbanque.jsf.util.Util;
 @RequestScoped
 public class Transfert {
 
-    private int idSource;
-    private int idDestinataire;
+    private Long idSource;
+    private Long idDestinataire;
     @PositiveOrZero
     private int montant;
 
@@ -34,11 +34,11 @@ public class Transfert {
     public Transfert() {
     }
 
-    public int getIdSource() {
+    public Long getIdSource() {
         return idSource;
     }
 
-    public int getIdDestinataire() {
+    public Long getIdDestinataire() {
         return idDestinataire;
     }
 
@@ -46,11 +46,11 @@ public class Transfert {
         return montant;
     }
 
-    public void setIdSource(int idSource) {
+    public void setIdSource(Long idSource) {
         this.idSource = idSource;
     }
 
-    public void setIdDestinataire(int idDestinataire) {
+    public void setIdDestinataire(Long idDestinataire) {
         this.idDestinataire = idDestinataire;
     }
 

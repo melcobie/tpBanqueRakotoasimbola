@@ -81,7 +81,17 @@ public class GestionnaireCompte {
         em.merge(destinataire);
     }
     
-    public CompteBancaire getCompteById(int id){
-        return em.find(CompteBancaire.class, Long.valueOf(id));
+    public void deposer(CompteBancaire c, int montant){
+        c.deposer(montant);
+        em.merge(c);
+    }
+    
+    public void retirer(CompteBancaire c, int montant){
+        c.retirer(montant);
+        em.merge(c);
+    }
+    
+    public CompteBancaire getCompteById(Long id){
+        return em.find(CompteBancaire.class, id);
     }
 }
