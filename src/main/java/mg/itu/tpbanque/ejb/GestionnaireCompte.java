@@ -94,4 +94,8 @@ public class GestionnaireCompte {
     public CompteBancaire getCompteById(Long id){
         return em.find(CompteBancaire.class, id);
     }
+    
+    public void deleteCompte(CompteBancaire c){
+        em.remove(em.merge(c));
+    }
 }

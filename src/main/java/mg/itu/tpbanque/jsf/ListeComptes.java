@@ -37,4 +37,8 @@ public class ListeComptes implements Serializable {
         return this.allComptes;
     }
     
+    public String supprimer(CompteBancaire c){
+        gestionnaire.deleteCompte(c);
+        return "listeComptes";
+    }
 }
