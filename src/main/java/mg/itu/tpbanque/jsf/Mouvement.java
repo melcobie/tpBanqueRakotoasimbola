@@ -82,14 +82,4 @@ public class Mouvement implements Serializable {
         return "listeComptes?faces-redirect=true";
     }
     
-    public String editCompte(){
-        if (this.gestionnaire.checkExistingName(compte)) {
-            Util.messageErreur("Ce nom est déjà utilisé !", "Ce nom est déjà utilisé !", "form:nom");
-            return null;
-        }
-        gestionnaire.update(compte);
-        Util.addFlashInfoMessage("Le compte numero " + compte.getId() + " a été modifié");
-        return "listeComptes?faces-redirect=true";
-    }
-    
 }

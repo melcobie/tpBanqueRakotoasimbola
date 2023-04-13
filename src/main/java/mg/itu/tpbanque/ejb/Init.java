@@ -8,6 +8,9 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
+import java.util.ArrayList;
+import java.util.List;
+import mg.itu.tpbanque.entities.CompteBancaire;
 
 
 /**
@@ -27,6 +30,22 @@ public class Init {
     
     @PostConstruct
     public void init(){
-        this.gestionnaireCompte.initCompte();
+        this.initCompte();
+    }
+    
+    public void initCompte() {
+        List<CompteBancaire> comptes = this.gestionnaireCompte.getAllComptes();
+        if(!comptes.isEmpty())
+            return;
+        
+        List<CompteBancaire> initialComptes = new ArrayList<>(4);
+        initialComptes.add(new CompteBancaire("John Lennon", 150000));
+        initialComptes.add(new CompteBancaire("Paul McCartney", 950000));
+        initialComptes.add(new CompteBancaire("Ringo Starr", 20000));
+        initialComptes.add(new CompteBancaire("Georges Harrisson", 100000));
+        
+        for(CompteBancaire compte: initialComptes){
+            this.gestionnaireCompte.creerCompte(compte);
+        }
     }
 }

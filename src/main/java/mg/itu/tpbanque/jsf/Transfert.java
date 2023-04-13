@@ -79,7 +79,7 @@ public class Transfert {
             Util.messageErreur("Le montant ne doit pas etre négatif !", "Montant négatif", "form:montant");
             erreur = true;
         }
-        if(erreur == true){
+        if(erreur){
             return null;
         }
         this.gestionnaire.transferer(source, destinataire, montant);

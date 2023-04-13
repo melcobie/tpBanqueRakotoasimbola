@@ -56,22 +56,6 @@ public class GestionnaireCompte {
         return query.getResultList();
     }
     
-    public void initCompte() {
-        List<CompteBancaire> comptes = this.getAllComptes();
-        if(!comptes.isEmpty())
-            return;
-        
-        List<CompteBancaire> initialComptes = new ArrayList<>(4);
-        initialComptes.add(new CompteBancaire("John Lennon", 150000));
-        initialComptes.add(new CompteBancaire("Paul McCartney", 950000));
-        initialComptes.add(new CompteBancaire("Ringo Starr", 20000));
-        initialComptes.add(new CompteBancaire("Georges Harrisson", 100000));
-        
-        for(CompteBancaire compte: initialComptes){
-            this.creerCompte(compte);
-        }
-    }
-    
     public void transferer(CompteBancaire source,
             CompteBancaire destinataire,
             int montant){

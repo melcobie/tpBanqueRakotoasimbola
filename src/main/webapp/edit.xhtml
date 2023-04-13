@@ -11,29 +11,29 @@
 
             <ui:define name="metadata">
                 <f:metadata>
-                    <f:viewParam name="id" value="#{mouvement.id}" required="true"/>
-                    <f:viewAction action="#{mouvement.loadCompte}"/>
+                    <f:viewParam name="id" value="#{edit.id}" required="true"/>
+                    <f:viewAction action="#{edit.loadCompte}"/>
                 </f:metadata>
             </ui:define>
             
             <ui:param name="titre" value="Modifier un compte"/>
 
             <ui:define name="content">
-                <h:outputText value="Aucun compte avec l'id #{mouvement.id} !" rendered='#{mouvement.compte == null}'/>
+                <h:outputText value="Aucun compte avec l'id #{edit.id} !" rendered='#{edit.compte == null}'/>
                 
-                <h:form rendered='#{mouvement.compte != null}'>
+                <h:form rendered='#{edit.compte != null}'>
                     <h:panelGrid columns="3">
                         Nom du titulaire: 
-                        <h:inputText id="nom" size="6" value="#{mouvement.compte.nom}" required='true'/>
+                        <h:inputText id="nom" size="6" value="#{edit.compte.nom}" required='true'/>
                         <h:message for="nom"/>
                         Solde : 
-                        <h:outputText id="solde" value="#{mouvement.compte.solde}">
+                        <h:outputText id="solde" value="#{edit.compte.solde}">
                             <f:convertNumber  pattern="###,###,##0"/>
                         </h:outputText>
                         <h:message for="solde"/>
                     </h:panelGrid>
                     <h:commandButton value='Modifier le compte'
-                                     action='#{mouvement.editCompte}'/>
+                                     action='#{edit.editCompte}'/>
                 </h:form>
                 <h:messages/>
             </ui:define>
