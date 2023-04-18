@@ -5,8 +5,10 @@
 package mg.itu.tpbanque.jsf;
 
 import jakarta.ejb.EJB;
+import jakarta.ejb.EJBException;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import mg.itu.tpbanque.ejb.GestionnaireCompte;
@@ -20,12 +22,13 @@ import mg.itu.tpbanque.jsf.util.Util;
 @Named(value = "mouvement")
 @ViewScoped
 public class Mouvement implements Serializable {
+
     private Long id;
     private String typeMouvement;
     @PositiveOrZero
     private int montant;
     private CompteBancaire compte;
-    
+
     @EJB
     GestionnaireCompte gestionnaire;
 
@@ -62,24 +65,39 @@ public class Mouvement implements Serializable {
     public CompteBancaire getCompte() {
         return compte;
     }
-    
-    public void loadCompte(){
+
+    public void loadCompte() {
         this.compte = gestionnaire.getCompteById(id);
     }
-    
-    public String enregistrer(){
-        if(typeMouvement.equals("ajout")){
-            gestionnaire.deposer(compte, montant);
-        }
-        else if(typeMouvement.equals("retrait")){
-            if(montant > compte.getSolde()){
-                Util.messageErreur("Votre solde est insuffisant !", "Solde insuffisant", "form:montant");
-                return null;
+
+    public String enregistrer() {
+        try {
+            if (typeMouvement.equals("ajout")) {
+                gestionnaire.deposer(compte, montant);
+            } else if (typeMouvement.equals("retrait")) {
+                if (montant > compte.getSolde()) {
+                    Util.messageErreur("Votre solde est insuffisant !", "Solde insuffisant", "form:montant");
+                    return null;
+                }
+                gestionnaire.retirer(compte, montant);
             }
-            gestionnaire.retirer(compte, montant);
+            Util.addFlashInfoMessage(typeMouvement + " enregistré sur le compte de " + compte.getNom());
+            return "listeComptes?faces-redirect=true";
+        } catch (EJBException ex) {
+            Throwable cause = ex.getCause();
+            if (cause != null) {
+                if (cause instanceof OptimisticLockException) {
+                    Util.messageErreur("Le compte de " + compte.getNom()
+                            + " a été modifié ou supprimé par un autre utilisateur !");
+                } else { // Afficher le message de ex si la cause n'est pas une OptimisticLockException
+                    Util.messageErreur(cause.getMessage());
+                }
+            } else { // Pas de cause attachée à l'EJBException
+                Util.messageErreur(ex.getMessage());
+            }
+            return null; // pour rester sur la page s'il y a une exception
         }
-        Util.addFlashInfoMessage(typeMouvement + " enregistré sur le compte de " + compte.getNom());
-        return "listeComptes?faces-redirect=true";
+
     }
-    
+
 }
