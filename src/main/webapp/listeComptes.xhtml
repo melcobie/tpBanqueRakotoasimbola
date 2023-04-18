@@ -33,7 +33,10 @@
                                 <f:convertNumber  pattern="###,###,##0"/>
                             </h:outputText>
                         </p:column>
-                        <p:column width='50'>
+                        <p:column width='50' style="text-align:center;">
+                            <f:facet name="header">
+                                <h:outputText value="Opérations"/>
+                            </f:facet>
                             <h:link outcome="edit?id=#{item.id}">
                                 <h:graphicImage name='images/edit.png'
                                                height='20'/>
@@ -42,6 +45,12 @@
                                <h:graphicImage name='images/delete.png'
                                                height='20'/>
                             </h:commandLink>
+                        </p:column>
+                        <p:column width="50" style="text-align:center;">
+                            <f:facet name="header">
+                                <h:outputText value="Historique Opérations" escape="false"/>
+                            </f:facet>
+                            <h:link outcome="historique?id=#{item.id}" value="Détails"/> 
                         </p:column>
                     </p:dataTable>
                 </h:form>
